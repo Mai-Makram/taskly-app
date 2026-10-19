@@ -1,0 +1,39 @@
+@use '../../../../../src/styles/_variables.scss' as *;
+
+.custom-mat-input {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 24px;
+
+  // Overriding Angular Material Styles
+  ::ng-deep .mat-mdc-text-field-wrapper {
+    background-color: $color-surface-highest !important;
+    border-radius: $radius-sm !important;
+    padding: 14px 16px !important;
+  }
+
+  ::ng-deep .mdc-line-ripple {
+    display: none !important; // hide the default line ripple
+  }
+
+  ::ng-deep .custom-height-field {
+    // edit the height of the input field
+    .mat-mdc-text-field-wrapper {
+      height: 48px;
+    }
+
+    // to center the label vertically
+    .mat-mdc-form-field-flex {
+      height: 100%;
+      align-items: center;
+    }
+
+    // to center the input text and placeholder vertically
+    .mat-mdc-form-field-infix {
+      padding-top: 8px !important;
+      padding-bottom: 8px !important;
+      min-height: unset !important;
+    }
+  }
+}

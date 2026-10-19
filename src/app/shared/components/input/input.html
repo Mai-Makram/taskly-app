@@ -1,0 +1,12 @@
+<div class="custom-mat-input">
+  @if (label()) {
+    <mat-label>{{ label() }}</mat-label>
+  }
+
+  <mat-form-field appearance="fill" subscriptSizing="dynamic" class="custom-height-field">
+    <input matInput [type]="type()" [placeholder]="placeholder()" [formControl]="control()" />
+    @if (control().invalid && control().touched) {
+      <mat-error>{{ errorMessage() }}</mat-error>
+    }
+  </mat-form-field>
+</div>

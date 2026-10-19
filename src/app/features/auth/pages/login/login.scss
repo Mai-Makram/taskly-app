@@ -1,0 +1,43 @@
+:host {
+  display: block;
+  max-width: 440px;
+  margin: 48px auto;
+  padding: 0 16px;
+}
+
+.login-card {
+  padding: 24px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.login-form__action {
+  margin-top: 8px;
+}
+
+.login-message {
+  margin: 0;
+  font-size: 14px;
+}
+
+.login-message--error {
+  color: #b42318;
+}
+
+.login-message--success {
+  color: #067647;
+}
+
+.login-footer {
+  margin: 20px 0 0;
+  text-align: center;
+}
+
+.login-footer a {
+  font-weight: 600;
+}
