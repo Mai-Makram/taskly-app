@@ -1,0 +1,54 @@
+<mat-card class="login-card" appearance="outlined">
+  <mat-card-header>
+    <mat-card-title>Welcome back</mat-card-title>
+    <mat-card-subtitle>Log in to continue to your workspace</mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      <app-input
+        label="EMAIL"
+        type="email"
+        placeholder="yourname@company.com"
+        [control]="f.email"
+        [errorMessage]="
+          f.email.errors?.['required']
+            ? 'Email is required'
+            : f.email.errors?.['email']
+              ? 'Please enter a valid email address'
+              : ''
+        "
+      >
+      </app-input>
+
+      <app-input
+        label="PASSWORD"
+        type="password"
+        placeholder="••••••••"
+        [control]="f.password"
+        [errorMessage]="f.password.errors?.['required'] ? 'Password is required' : ''"
+      >
+      </app-input>
+
+      @if (errorMessage) {
+        <p class="login-message login-message--error" role="alert">{{ errorMessage }}</p>
+      }
+
+      @if (successMessage) {
+        <p class="login-message login-message--success" role="status">{{ successMessage }}</p>
+      }
+
+      <div class="login-form__action">
+        <app-button
+          variant="primary"
+          typeBtn="submit"
+          [disabled]="loginForm.invalid || isSubmitting"
+        >
+          {{ isSubmitting ? 'Logging in...' : 'Log In' }}
+        </app-button>
+      </div>
+    </form>
+
+    <p class="login-footer">Don't have an account? <a routerLink="/signup">Sign up</a></p>
+  </mat-card-content>
+</mat-card>
