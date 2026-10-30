@@ -35,6 +35,7 @@ export class SignupComponent {
   private readonly router = inject(Router);
 
   private snackBar = inject(MatSnackBar);
+
   // errorMessage = signal<string | null>(null);
 
   // Custom Validator لمطابقة Passwords
@@ -131,9 +132,7 @@ export class SignupComponent {
     console.log('11111');
     if (this.signupForm.invalid) {
       console.log('222');
-
       this.signupForm.markAllAsTouched();
-
       return;
     } else {
       console.log('333');
@@ -158,17 +157,19 @@ export class SignupComponent {
           console.log('uu:', user);
 
           if (token && user) {
-            this.authStore.setSession(token, user);
+            // this.authStore.setSession(token, user);
             this.router.navigate(['/login']);
           }
         },
         error: (err) => {
           console.log('err4444');
 
-          console.error('Error:', err.error.error_code);
+          // console.error('Error:', err.error.error_code);
           // const saveErrorMessage = err. error.error_code ;
           // this.errorMessage.set( saveErrorMessage)
-          this.showEmailExistsAlert();
+          if (err) {
+            this.showEmailExistsAlert();
+          }
         },
       });
     }

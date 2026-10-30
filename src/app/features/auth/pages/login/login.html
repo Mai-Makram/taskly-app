@@ -1,11 +1,12 @@
-<mat-card class="login-card" appearance="outlined">
+<mat-card class="example-card" appearance="outlined">
   <mat-card-header>
-    <mat-card-title>Welcome back</mat-card-title>
-    <mat-card-subtitle>Log in to continue to your workspace</mat-card-subtitle>
+    <mat-card-title>Welcome Back</mat-card-title>
+    <mat-card-subtitle>Please enter your details to access your workspace</mat-card-subtitle>
   </mat-card-header>
 
   <mat-card-content>
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="signup-form">
+      <!-- Email -->
       <app-input
         label="EMAIL"
         type="email"
@@ -21,34 +22,28 @@
       >
       </app-input>
 
+      <!-- Password -->
       <app-input
         label="PASSWORD"
         type="password"
-        placeholder="••••••••"
+        placeholder="Password"
         [control]="f.password"
         [errorMessage]="f.password.errors?.['required'] ? 'Password is required' : ''"
       >
       </app-input>
 
-      @if (errorMessage) {
-        <p class="login-message login-message--error" role="alert">{{ errorMessage }}</p>
-      }
+      <div class="section-check">
+        <mat-checkbox formControlName="rememberMe">Remember Me</mat-checkbox>
+        <p>Forgot Password?</p>
+      </div>
 
-      @if (successMessage) {
-        <p class="login-message login-message--success" role="status">{{ successMessage }}</p>
-      }
-
-      <div class="login-form__action">
-        <app-button
-          variant="primary"
-          typeBtn="submit"
-          [disabled]="loginForm.invalid || isSubmitting"
-        >
-          {{ isSubmitting ? 'Logging in...' : 'Log In' }}
+      <!-- Submit Button -->
+      <div class="signup-form__action">
+        <app-button variant="primary" typeBtn="submit" [disabled]="loginForm.invalid">
+          Log In
         </app-button>
       </div>
     </form>
-
-    <p class="login-footer">Don't have an account? <a routerLink="/signup">Sign up</a></p>
   </mat-card-content>
+  <div class="footer-card">Don't have an account? <span routerLink="/signup">Sign Up</span></div>
 </mat-card>

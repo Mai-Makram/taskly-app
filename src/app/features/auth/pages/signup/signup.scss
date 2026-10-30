@@ -2,8 +2,9 @@
 @use '../../../../../styles/variables' as *;
 
 .example-card {
-  width: 576px;
+  width: 100%;
   max-width: 576px;
+  box-sizing: border-box;
   border-radius: 8px;
   padding: 48px;
   box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
@@ -12,7 +13,12 @@
   mat-card-header {
     justify-content: center;
     text-align: center;
+    // display: flex;
+    // flex-direction: column;
+    // align-items: center;
+    // margin-bottom: 24px;
     mat-card-title {
+      // display: block;
       @extend .headline-lg;
     }
     mat-card-subtitle {
@@ -22,15 +28,14 @@
 
   mat-card-content {
     margin-bottom: 32px;
-
     .signup-form {
       @extend .label-sm;
       color: $color-slate-600;
       .password-section {
         display: flex;
         justify-content: space-between;
+        gap: 8px;
       }
-
       .password-checklist {
         margin-top: 24px;
         @extend .body-md;
@@ -38,13 +43,11 @@
           font-size: 12px;
           height: 12px; // حجم الأيقونة (مثلاً 16px)
           color: #9e9e9e; // لون رمادي افتراضي لأيقونة Material
-
           &.text-success {
             color: #2e7d32 !important; // لون أخضر مخصص ومتناسق مع Material Design
           }
         }
       }
-
       app-button {
         margin-top: 24px;
         margin-bottom: 16px;
@@ -63,3 +66,11 @@
     }
   }
 }
+
+// @media (max-width: 600px) {
+//   .example-card {
+//     padding: 24px;
+//     width: 100px;
+//     background-color: #2e7d32;
+//   }
+// }

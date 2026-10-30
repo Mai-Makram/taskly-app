@@ -16,7 +16,7 @@ export interface SignupRequest {
   };
 }
 
-export interface LoginValues {
+export interface LoginRequest {
   email: string;
   password: string;
 }
@@ -28,7 +28,14 @@ export interface AuthUser {
 }
 
 export interface AuthResponse {
-  access_token: string | null;
+  // access_token: string | null;
+  // refresh_token: string;
+  // expires_in?: number;
+  // user: AuthUser;
+  access_token: string;
+  refresh_token: string;
+  expires_in?: number;
+  expires_at?: number;
   user: AuthUser;
 }
 
