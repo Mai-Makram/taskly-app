@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { AuthResponse, LoginValues, SignupRequest } from '../models/auth.model';
-import { Observable } from 'rxjs';
+import { AuthResponse, LoginRequest, SignupRequest } from '../models/auth.model';
+import { Observable, tap } from 'rxjs';
+import { AuthStore } from './auth-store.service';
 // import { environment } from '../../../environments/environment.development';
 
 @Injectable({
@@ -10,14 +11,60 @@ import { Observable } from 'rxjs';
 })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly authStore = inject(AuthStore);
   private readonly baseUrl = environment.apiUrl;
 
   signup(payload: SignupRequest): Observable<AuthResponse> {
     return this.http.post<AuthResponse>(`${this.baseUrl}/auth/v1/signup`, payload);
   }
 
-  login(payload: LoginValues): Observable<AuthResponse> {
-    return this.http.post<AuthResponse>(`${this.baseUrl}/auth/v1/token?grant_type=password`, payload);
+  login(payload: LoginRequest, rememberMe: boolean): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.baseUrl}/auth/v1/token?grant_type=password`, payload)
+      .pipe(
+        tap((response) => {
+          // بنمرر البيانات كلها للـ AuthStore عشان يتعامل مع التخزين (Local/Session) والـ Remember Me
+          this.authStore.setSession(
+            response.access_token,
+            response.refresh_token,
+            response.user,
+            rememberMe,
+            response.expires_in,
+            response.expires_at,
+          );
+        }),
+      );
+  }
+
+  refreshToken() {
+    const storedSession = localStorage.getItem('session');
+    let refreshTokenVal;
+
+    if (storedSession) {
+      try {
+        refreshTokenVal = JSON.parse(storedSession).refresh_token;
+      } catch {
+        refreshTokenVal = '';
+      }
+    } else {
+      refreshTokenVal = sessionStorage.getItem('refresh_token') || '';
+    }
+
+    return this.http
+      .post<AuthResponse>(`${this.baseUrl}/auth/v1/token?grant_type=refresh_token`, {
+        refresh_token: refreshTokenVal,
+      })
+      .pipe(
+        tap((response) => {
+          // لو الـ API رجع access_token جديد، بنحدثه في الـ Store
+          this.authStore.setAccessToken(response.access_token);
+        }),
+      );
+  }
+
+  // دالة تسجيل الخروج (Logout)
+  logout() {
+    this.authStore.clearSession();
   }
 
   //   private readonly storageKey = 'taskly-user';

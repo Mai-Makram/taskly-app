@@ -1,43 +1,74 @@
-:host {
-  display: block;
-  max-width: 440px;
-  margin: 48px auto;
-  padding: 0 16px;
+@use '../../../../../styles/typography' as *;
+@use '../../../../../styles/variables' as *;
+
+// :host {
+//   display: block;
+//   max-width: 440px;
+//   margin: 48px auto;
+//   padding: 0 16px;
+// }
+
+.example-card {
+  width: 100%;
+  max-width: 576px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  padding: 48px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.08);
+  background-color: #ffffff;
+
+  mat-card-header {
+    justify-content: center;
+    text-align: center;
+    mat-card-title {
+      @extend .headline-lg;
+    }
+    mat-card-subtitle {
+      @extend .body-md;
+    }
+  }
+
+  mat-card-content {
+    margin-bottom: 32px;
+
+    .signup-form {
+      @extend .label-sm;
+      color: $color-slate-600;
+      app-button {
+        margin-top: 24px;
+        margin-bottom: 16px;
+        @extend .headline-lg;
+      }
+
+      .section-check {
+        display: flex;
+        justify-content: space-between;
+        color: $color-primary;
+        font-weight: bold;
+      }
+    }
+  }
+
+  .footer-card {
+    text-align: center;
+    @extend .body-md;
+    color: $color-slate-600;
+    span {
+      color: $color-primary;
+      font-weight: bold;
+    }
+  }
 }
 
-.login-card {
-  padding: 24px;
+.example-section {
+  margin: 12px 0;
 }
 
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin-top: 24px;
+.example-margin {
+  margin: 0 12px;
 }
 
-.login-form__action {
-  margin-top: 8px;
-}
-
-.login-message {
-  margin: 0;
-  font-size: 14px;
-}
-
-.login-message--error {
-  color: #b42318;
-}
-
-.login-message--success {
-  color: #067647;
-}
-
-.login-footer {
-  margin: 20px 0 0;
-  text-align: center;
-}
-
-.login-footer a {
-  font-weight: 600;
+ul {
+  list-style-type: none;
+  margin-top: 4px;
 }
